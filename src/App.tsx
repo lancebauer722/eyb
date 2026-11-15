@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
-import { ArrowUpRight, Menu } from 'lucide-react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -102,7 +102,11 @@ const CustomCursor = () => {
 export default function App() {
   const [activeProject, setActiveProject] = useState<any>(null);
   const [showEmail, setShowEmail] = useState(false);
+  const [isPastHero, setIsPastHero] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
+  const heroSectionRef = useRef<HTMLElement>(null);
+  const lenisRef = useRef<Lenis | null>(null);
   const revealTopRef = useRef<HTMLDivElement>(null);
   const revealBottomRef = useRef<HTMLDivElement>(null);
   const revealImageRef = useRef<HTMLImageElement>(null);
@@ -117,58 +121,61 @@ export default function App() {
       gestureOrientation: 'vertical',
       smoothWheel: true,
     });
+    lenisRef.current = lenis;
+    lenis.on('scroll', ScrollTrigger.update);
 
+    let rafId: number;
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(targetId, { duration: 1.2 });
+    } else {
+      document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   // Header Scroll Logic
   useEffect(() => {
-    let lastScrollY = window.scrollY;
     let ticking = false;
-    
+
+    const updateHeaderState = () => {
+      const heroEl = heroSectionRef.current;
+      const headerEl = headerRef.current;
+      const headerHeight = headerEl ? headerEl.offsetHeight : 72;
+      const heroHeight = heroEl ? heroEl.offsetHeight : window.innerHeight;
+      setIsPastHero(window.scrollY >= Math.max(0, heroHeight - headerHeight));
+      ticking = false;
+    };
+
     const handleScroll = () => {
       if (!ticking) {
-        window.requestAnimationFrame(() => {
-          if (!headerRef.current) return;
-          const currentScrollY = window.scrollY;
-          
-          if (currentScrollY > lastScrollY && currentScrollY > 100) {
-            gsap.to(headerRef.current, { 
-              y: '-100%', 
-              duration: 0.3, 
-              ease: 'power3.out',
-              overwrite: true
-            });
-          } else {
-            gsap.to(headerRef.current, { 
-              y: '0%', 
-              paddingTop: currentScrollY > 50 ? '1rem' : '1.5rem',
-              paddingBottom: currentScrollY > 50 ? '1rem' : '1.5rem',
-              duration: 0.3, 
-              ease: 'power3.out',
-              backgroundColor: currentScrollY > 50 ? 'rgba(255, 255, 255, 0.9)' : 'transparent',
-              backdropFilter: currentScrollY > 50 ? 'blur(16px)' : 'none',
-              overwrite: true
-            });
-          }
-          lastScrollY = currentScrollY;
-          ticking = false;
-        });
+        window.requestAnimationFrame(updateHeaderState);
         ticking = true;
       }
     };
 
+    updateHeaderState();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   // Progressive Reveal Animations
@@ -190,6 +197,25 @@ export default function App() {
         }
       );
     });
+
+    const heroImg = document.querySelector('.hero-parallax-img');
+    if (heroImg && heroSectionRef.current) {
+      gsap.fromTo(
+        heroImg,
+        { scale: 1.04, yPercent: 0 },
+        {
+          scale: 1.12,
+          yPercent: 4,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroSectionRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+        }
+      );
+    }
 
     const images = document.querySelectorAll('.parallax-img');
     images.forEach((img) => {
@@ -332,13 +358,18 @@ export default function App() {
       img: '/898bf0d613e24f5db255a14005355ef9.jpeg', 
       heroImg: '/3159 Stevenson Dr Reshoot-2.jpeg',
       split: 'col-span-12 md:col-span-5',
+      featuredLogo: '/assets/aistudio/62ccb7b765d5ab23004e42d1_AmBD_Architecture_Logo_b8f7687c.svg',
       description: 'A minimalist estate compound in Pebble Beach that blends Scandinavian and Japanese design influences, featuring a glass-enclosed passage over a tranquil pond that connects the residence\'s public and private wings.',
       details: [
         '/Waterbridge (1).mp4',
         '/3159 Stevenson Dr Reshoot-7.jpeg',
         '/3159 Stevenson Dr Reshoot-6.jpeg',
         '/3159 Stevenson Dr-15.jpeg',
-        '/3159 Stevenson Dr-9.jpeg'
+        '/3159 Stevenson Dr-9.jpeg',
+        '/assets/aistudio/5544_60_09e97bd1.webp',
+        '/assets/aistudio/5544_18_cedb2df6.webp',
+        '/assets/aistudio/5544_2_86b16b38.webp',
+        '/assets/aistudio/5544_33_2b10a11e.webp'
       ]
     },
     { 
@@ -356,7 +387,11 @@ export default function App() {
         '/2949_1.jpeg',
         '/2949.jpeg',
         '/2949_4.jpeg',
-        '/2949_5.jpeg'
+        '/2949_5.jpeg',
+        '/assets/aistudio/sg_4_7d43b5e4.webp',
+        '/assets/aistudio/sg_3_b7cbe13d.webp',
+        '/assets/aistudio/sg_2_dcd0ba72.webp',
+        '/assets/aistudio/sg_1_a30be47c.webp'
       ]
     },
     { 
@@ -374,7 +409,10 @@ export default function App() {
         '/9cc94aaabed54793254cbf805ba02a5c.jpeg',
         '/5dbba78affb272558cb6f5eb893a174a.jpeg',
         '/02b896f3d3e22689f939694e3cd7c62a.jpeg',
-        '/ff602f98b71f12e27713377500d76b84.jpeg'
+        '/ff602f98b71f12e27713377500d76b84.jpeg',
+        '/assets/aistudio/i_3_be67d265.webp',
+        '/assets/aistudio/i_1_0d871c60.webp',
+        '/assets/aistudio/i_2_11857dff.webp'
       ]
     },
   ];
@@ -384,41 +422,112 @@ export default function App() {
       <CustomCursor />
 
       {/* Header */}
-      <header ref={headerRef} className="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-6 flex justify-between items-center">
-        <div className="font-sans text-2xl font-medium tracking-tight uppercase">Emily Yang Bauer</div>
-        <nav className="hidden md:flex gap-8 font-sans text-xs tracking-widest uppercase">
-          <Magnetic><a href="#about" className="hover:text-[#C0C0C0] transition-colors">About</a></Magnetic>
-          <Magnetic><a href="#work" className="hover:text-[#C0C0C0] transition-colors">Work</a></Magnetic>
-          <Magnetic><a href="#contact" className="hover:text-[#C0C0C0] transition-colors">Contact</a></Magnetic>
+      <header
+        ref={headerRef}
+        className={`fixed top-0 left-0 w-full z-50 px-6 md:px-12 flex justify-between items-center transition-all duration-300 ${
+          isPastHero
+            ? 'py-4 bg-white/95 backdrop-blur-md text-[#1A1A1A] border-b border-[#1A1A1A]/10'
+            : 'py-6 bg-transparent text-white'
+        }`}
+      >
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            setMobileMenuOpen(false);
+            lenisRef.current?.scrollTo(0, { duration: 1.2 });
+          }}
+          className="font-sans text-lg sm:text-xl md:text-2xl font-medium tracking-tight uppercase whitespace-nowrap shrink-0"
+        >
+          Emily Yang Bauer
+        </a>
+        <nav className="hidden md:flex items-center gap-8 font-sans text-xs tracking-widest uppercase">
+          <Magnetic>
+            <a
+              href="#about"
+              onClick={(e) => scrollToSection(e, '#about')}
+              className={`whitespace-nowrap shrink-0 transition-opacity duration-200 ${
+                isPastHero ? 'hover:text-[#888888]' : 'hover:opacity-75'
+              }`}
+            >
+              About
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a
+              href="#work"
+              onClick={(e) => scrollToSection(e, '#work')}
+              className={`whitespace-nowrap shrink-0 transition-opacity duration-200 ${
+                isPastHero ? 'hover:text-[#888888]' : 'hover:opacity-75'
+              }`}
+            >
+              Work
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a
+              href="#contact"
+              onClick={(e) => scrollToSection(e, '#contact')}
+              className={`whitespace-nowrap shrink-0 transition-opacity duration-200 ${
+                isPastHero ? 'hover:text-[#888888]' : 'hover:opacity-75'
+              }`}
+            >
+              Contact
+            </a>
+          </Magnetic>
         </nav>
-        <Magnetic>
-          <button className="md:hidden">
-            <Menu size={24} />
-          </button>
-        </Magnetic>
+        <button
+          type="button"
+          aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileMenuOpen}
+          onClick={() => setMobileMenuOpen((prev) => !prev)}
+          className="md:hidden p-2 -mr-2 transition-opacity hover:opacity-75"
+        >
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </header>
 
-      {/* Hero Section */}
-      <section className="pt-20 pb-12 px-6 md:px-12">
-        <div className="w-full h-[2px] bg-[#1A1A1A] mb-12"></div>
-        <div className="overflow-hidden mb-12">
-          <h1 className="reveal-text font-sans text-[10vw] leading-[1.1] tracking-tighter uppercase font-bold text-[#222222]">
-            SPACE, LIGHT, AND THE GARDEN
-          </h1>
+      {/* Mobile Navigation Overlay */}
+      {mobileMenuOpen && (
+        <div
+          className={`fixed inset-x-0 top-0 z-40 pt-24 pb-8 px-6 md:hidden transition-colors duration-300 ${
+            isPastHero
+              ? 'bg-white/95 backdrop-blur-md text-[#1A1A1A] border-b border-[#1A1A1A]/10'
+              : 'bg-[#1A1A1A]/90 backdrop-blur-md text-white'
+          }`}
+        >
+          <nav className="flex flex-col gap-6 font-sans text-sm tracking-widest uppercase">
+            <a href="#about" onClick={(e) => scrollToSection(e, '#about')} className="py-1">
+              About
+            </a>
+            <a href="#work" onClick={(e) => scrollToSection(e, '#work')} className="py-1">
+              Work
+            </a>
+            <a href="#contact" onClick={(e) => scrollToSection(e, '#contact')} className="py-1">
+              Contact
+            </a>
+          </nav>
         </div>
+      )}
 
-        <div className="w-full aspect-[4/3] md:aspect-[3/2] bg-[#EAEAEA] overflow-hidden">
-          <img 
-            src="/2949_17.jpeg" 
-            alt="Futuristic Architecture"
-            className="w-full h-full object-cover parallax-img"
-          />
-        </div>
+      {/* Hero Section */}
+      <section
+        ref={heroSectionRef}
+        className="relative w-full h-[100svh] min-h-[600px] overflow-hidden bg-[#1A1A1A]"
+      >
+        <img
+          src="/2949_17.jpeg"
+          alt="Minimalist architectural pavilion framed by pine trees at dusk"
+          className="hero-parallax-img w-full h-full object-cover object-[50%_55%]"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/60 via-black/25 to-transparent"
+        />
       </section>
 
       {/* About Designer Section */}
-      <section id="about" className="px-6 md:px-12 pb-24 md:pb-32">
-        <div className="w-full h-[2px] bg-[#1A1A1A] mb-24 md:mb-32"></div>
+      <section id="about" className="px-6 md:px-12 pt-24 md:pt-32 pb-12 md:pb-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-center">
           <div className="md:col-span-5 md:col-start-2 order-2 md:order-1">
             <div className="overflow-hidden relative aspect-[3/4] bg-[#EAEAEA]">
@@ -435,12 +544,12 @@ export default function App() {
             </div>
             <div className="overflow-hidden mb-8">
               <h2 className="reveal-text font-sans font-normal text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-normal uppercase text-[#1A1A1A]">
-                HARMONIZING HERITAGE WITH MODERN MINIMALISM
+                Designing with Nature in Mind
               </h2>
             </div>
-            <div className="overflow-hidden mb-12">
+            <div className="overflow-hidden">
               <p className="reveal-text font-sans text-sm md:text-base font-normal leading-relaxed tracking-wide text-[#888888] max-w-lg">
-                I approach every project as a dialogue between architectural legacy and the surrounding environment. Drawing inspiration from the traditional water gardens of Suzhou, I harmonize traditional Chinese private compound principles with the understated functionality of Scandinavian-Japanese minimalism. By embracing the intentional use of negative space, I design highly functional estates that reveal and conceal, fostering an interplay between contemporary forms and natural elements.
+                My work draws on the water gardens of Suzhou, traditional Chinese courtyard homes, and the simplicity of Scandinavian and Japanese design. I pay close attention to how rooms connect to gardens, how views unfold as you move through a home, and where an open space can offer a moment of quiet. I want the homes I design to feel connected to their surroundings and comfortable to live in every day.
               </p>
             </div>
           </div>
@@ -448,7 +557,7 @@ export default function App() {
       </section>
 
       {/* Projects Grid (Asymmetrical Masonry) */}
-      <section id="work" className="px-6 md:px-12 py-24">
+      <section id="work" className="px-6 md:px-12 pt-12 md:pt-16 pb-24">
         <div className="mb-16 md:mb-24 flex justify-between items-end border-b-2 border-[#1A1A1A] pb-8">
           <div className="overflow-hidden">
             <h2 className="reveal-text font-sans font-normal text-4xl md:text-6xl tracking-normal uppercase text-[#1A1A1A]">
@@ -475,6 +584,18 @@ export default function App() {
                     className="w-full h-full object-cover parallax-img transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  {project.featuredLogo && (
+                    <div className="absolute bottom-4 left-4 z-10 inline-flex items-center gap-2.5 w-fit max-w-[calc(100%-2rem)] bg-[#F9F9F9]/85 backdrop-blur-sm px-3 py-[10px] rounded-[4px]">
+                      <span className="font-sans text-xs leading-none text-[#333333] whitespace-nowrap">
+                        Featured on
+                      </span>
+                      <img
+                        src={project.featuredLogo}
+                        alt="America By Design Architecture"
+                        className="w-[84px] h-auto object-contain shrink-0"
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="mt-6 flex justify-between items-start">
                   <div>
@@ -608,7 +729,7 @@ export default function App() {
                   return (
                     <div key={idx} className="col-span-1 md:col-span-2 aspect-video w-full bg-[#EAEAEA] overflow-hidden">
                       {isVideo ? (
-                        <video src={item} autoPlay loop muted playsInline controls className="w-full h-full object-cover project-parallax-img" />
+                        <video src={item} autoPlay loop muted playsInline controls className="w-full h-full object-cover" />
                       ) : (
                         <img src={item} className="w-full h-full object-cover project-parallax-img" alt={`Detail ${idx + 1}`} />
                       )}
