@@ -363,7 +363,7 @@ export default function App() {
       details: [
         '/3159 Stevenson Drive, Pebble Beach.mp4',
         '/3159 Stevenson Dr Reshoot-7.jpeg',
-        '/3159 Stevenson Dr Reshoot-6.jpeg',
+        '/5544_41.webp',
         '/3159 Stevenson Dr-15.jpeg',
         '/3159 Stevenson Dr-9.jpeg',
         '/assets/aistudio/5544_60_09e97bd1.webp',
