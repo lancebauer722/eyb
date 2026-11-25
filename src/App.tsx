@@ -645,66 +645,226 @@ export default function App() {
       >
         <div className="project-scroll-content">
           {/* Project Hero Banner */}
-        <div className="relative w-full h-screen flex-shrink-0 bg-[#1A1A1A] overflow-hidden">
-          {/* Background Image */}
-          <div className="absolute inset-0 w-full h-full">
-            <img 
-              ref={revealImageRef}
-              src={activeProject?.heroImg || activeProject?.img} 
-              alt="Project Hero" 
-              className="w-full h-full object-cover opacity-0 scale-110"
-            />
-            <div className="absolute inset-0 bg-black/30" />
-          </div>
+{/* Project Hero Banner */}
+<div
+  className={`project-detail-hero ${
+    activeProject?.title === 'WATERBRIDGE HOUSE'
+      ? 'waterbridge-hero'
+      : ''
+  }`}
+>
+  <style>{`
+    .project-detail-hero {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #1a1a1a;
+      flex-shrink: 0;
+    }
 
-          {/* Close Button */}
-          <button 
-            onClick={closeProject}
-            className="fixed top-8 right-8 z-50 text-white font-sans text-xs tracking-widest uppercase mix-blend-difference hover:opacity-70 transition-opacity"
-          >
-            Close
-          </button>
+    .project-detail-hero .hero-shade {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      pointer-events: none;
+    }
 
-          {/* Split Text Container */}
-          <div className="relative z-10 w-full h-full flex items-center justify-center pointer-events-none">
-            {/* Top Half */}
-            <div 
-              ref={revealTopRef}
-              className="absolute inset-0 flex items-center justify-center"
-              style={{ clipPath: 'polygon(0 0, 100% 0, 100% 50%, 0 50%)' }}
-            >
-              <h2 
-                className="font-sans font-normal leading-none tracking-normal text-[#FFFFFF] whitespace-nowrap uppercase w-full text-center"
-                style={{ fontSize: `calc(130vw / ${Math.max(activeProject?.title?.length || 1, 1)})` }}
-              >
-                {activeProject?.title}
-              </h2>
-            </div>
+    .waterbridge-hero .hero-shade {
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.08) 20%,
+        rgba(0, 0, 0, 0.25) 45%,
+        rgba(0, 0, 0, 0.8) 100%
+      );
+    }
 
-            {/* Bottom Half */}
-            <div 
-              ref={revealBottomRef}
-              className="absolute inset-0 flex items-center justify-center"
-              style={{ clipPath: 'polygon(0 50%, 100% 50%, 100% 100%, 0 100%)' }}
-            >
-              <h2 
-                className="font-sans font-normal leading-none tracking-normal text-[#FFFFFF] whitespace-nowrap uppercase w-full text-center"
-                style={{ fontSize: `calc(130vw / ${Math.max(activeProject?.title?.length || 1, 1)})` }}
-              >
-                {activeProject?.title}
-              </h2>
-            </div>
-          </div>
+    .project-detail-hero .hero-content {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 2.5rem;
+      min-height: max(100svh, 40rem);
+      padding: 8rem clamp(1.5rem, 4vw, 4rem)
+        max(2.5rem, env(safe-area-inset-bottom));
+      color: white;
+    }
 
-          {/* Project Info (Revealed after split) */}
-          <div className="absolute bottom-12 left-12 z-20 text-white mix-blend-difference">
-            <p className="project-hero-info font-sans text-sm tracking-widest uppercase mb-2">{activeProject?.category}</p>
-            <p className="project-hero-info font-sans text-xs tracking-widest text-[#C0C0C0]">{activeProject?.year}</p>
-          </div>
-          <div className="absolute bottom-12 right-12 z-20 text-white mix-blend-difference animate-bounce">
-             <span className="project-hero-info font-sans text-xs tracking-widest uppercase">Scroll Down ↓</span>
-          </div>
-        </div>
+    .project-detail-hero .hero-quote {
+      margin: 0;
+      width: 100%;
+      max-width: 34rem;
+    }
+
+    .project-detail-hero .hero-quote p {
+      margin: 0;
+      font-size: clamp(1.5rem, 3vw, 1.875rem);
+      line-height: 1.3;
+      font-weight: 400;
+      text-wrap: pretty;
+    }
+
+    .project-detail-hero .hero-quote footer {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      letter-spacing: 0.08em;
+    }
+
+    .project-detail-hero .hero-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1.5rem 2rem;
+    }
+
+    .project-detail-hero .hero-location {
+      flex: 1 1 14rem;
+      min-width: 0;
+    }
+
+    .project-detail-hero .hero-scroll {
+      flex-shrink: 0;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    @media (min-width: 1200px) and (min-aspect-ratio: 3/2) {
+      .waterbridge-hero .hero-shade {
+        background: rgba(0, 0, 0, 0.08);
+      }
+
+      .waterbridge-hero .hero-content {
+        padding-top: max(7rem, 22svh);
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+
+      .waterbridge-hero .hero-quote {
+        align-self: flex-end;
+        width: 27%;
+        max-width: 26.25rem;
+        color: #1a1a1a;
+      }
+
+      .waterbridge-hero .hero-quote p {
+        font-size: clamp(1.5rem, 1.65vw, 1.875rem);
+      }
+
+      .waterbridge-hero .hero-bottom {
+        margin-top: auto;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+      }
+    }
+  `}</style>
+
+  {/* Background Image */}
+  <div className="absolute inset-0">
+    <img
+      ref={revealImageRef}
+      src={activeProject?.heroImg || activeProject?.img}
+      alt={activeProject?.title || 'Project hero'}
+      className="w-full h-full object-cover opacity-0 scale-110"
+    />
+    <div className="hero-shade" aria-hidden="true" />
+  </div>
+
+  {/* Close Button */}
+  <button
+    type="button"
+    onClick={closeProject}
+    className="fixed top-4 right-4 md:top-8 md:right-8 z-50
+      min-h-11 px-4 bg-black/40 text-white font-sans text-xs
+      tracking-widest uppercase hover:bg-black/60 transition-colors
+      focus-visible:outline focus-visible:outline-2
+      focus-visible:outline-offset-4 focus-visible:outline-white"
+  >
+    Close
+  </button>
+
+  {/* Split Text Container */}
+  <div className="absolute inset-0 z-10 pointer-events-none">
+    {/* Top Half */}
+    <div
+      ref={revealTopRef}
+      className="absolute inset-0 flex items-center justify-center"
+      style={{
+        clipPath: 'polygon(0 0, 100% 0, 100% 50%, 0 50%)',
+      }}
+    >
+      <h2
+        className="font-sans font-normal leading-none tracking-normal
+          text-white whitespace-nowrap uppercase w-full text-center"
+        style={{
+          fontSize: `calc(130vw / ${Math.max(
+            activeProject?.title?.length || 1,
+            1
+          )})`,
+        }}
+      >
+        {activeProject?.title}
+      </h2>
+    </div>
+
+    {/* Bottom Half */}
+    <div
+      ref={revealBottomRef}
+      className="absolute inset-0 flex items-center justify-center"
+      style={{
+        clipPath: 'polygon(0 50%, 100% 50%, 100% 100%, 0 100%)',
+      }}
+    >
+      <h2
+        className="font-sans font-normal leading-none tracking-normal
+          text-white whitespace-nowrap uppercase w-full text-center"
+        style={{
+          fontSize: `calc(130vw / ${Math.max(
+            activeProject?.title?.length || 1,
+            1
+          )})`,
+        }}
+      >
+        {activeProject?.title}
+      </h2>
+    </div>
+  </div>
+
+  {/* Quote and Project Information */}
+  <div className="hero-content">
+    {activeProject?.title === 'WATERBRIDGE HOUSE' && (
+      <blockquote className="hero-quote project-hero-info">
+        <p className="font-serif">
+          “In a place that’s known for its bold statements, this
+          property might be the boldest move of all.”
+        </p>
+        <footer className="font-sans">
+          — <span className="italic">America ByDESIGN</span>
+        </footer>
+      </blockquote>
+    )}
+
+    <div className="hero-bottom">
+      <div className="hero-location">
+        <p
+          className="project-hero-info font-sans text-sm
+            leading-relaxed tracking-widest uppercase mb-2"
+        >
+          {activeProject?.category}
+        </p>
+        <p className="project-hero-info font-sans text-xs tracking-widest">
+          {activeProject?.year}
+        </p>
+      </div>
+
+      <span className="hero-scroll project-hero-info font-sans">
+        Scroll Down ↓
+      </span>
+    </div>
+  </div>
+</div>
 
         {/* Scrollable Project Details */}
         <div className="w-full bg-[#FFFFFF] text-[#1A1A1A] px-6 md:px-12 py-24">
