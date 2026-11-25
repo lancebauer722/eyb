@@ -905,15 +905,22 @@ export default function App() {
                 </p>
               </div>
             </div>
-            {/* Waterbridge House — America ByDESIGN Feature */}
+         {/* Waterbridge House — America ByDESIGN Feature */}
 {activeProject?.title === 'WATERBRIDGE HOUSE' && (
   <section
     aria-labelledby="waterbridge-feature-title"
     className="mb-16 md:mb-24 border-y border-[#1A1A1A]/15 py-8 md:py-10"
   >
     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-12">
-      <div className="min-w-0">
-        <div className="flex flex-wrap items-center gap-4 mb-5">
+      <h3
+        id="waterbridge-feature-title"
+        className="min-w-0 font-sans font-normal text-2xl md:text-3xl leading-tight tracking-tight text-[#1A1A1A] max-w-lg"
+      >
+        A closer look at Waterbridge House.
+      </h3>
+
+      <div className="flex flex-col items-center gap-5 w-full sm:w-fit lg:shrink-0">
+        <div className="flex items-center justify-center gap-4">
           <span className="font-sans text-[11px] tracking-[0.18em] uppercase text-[#666666]">
             Featured on
           </span>
@@ -928,28 +935,21 @@ export default function App() {
           )}
         </div>
 
-        <h3
-          id="waterbridge-feature-title"
-          className="font-sans font-normal text-2xl md:text-3xl leading-tight tracking-tight text-[#1A1A1A] max-w-lg"
+        <a
+          href="https://www.youtube.com/watch?v=3a1A1Hcbs5w&t=97s"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Watch the Waterbridge House feature on YouTube (opens in a new tab)"
+          className="group inline-flex w-full items-center justify-center gap-5 min-h-12 px-6 py-4 bg-[#1A1A1A] text-white font-sans text-xs tracking-widest uppercase transition-colors duration-200 hover:bg-[#363636] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1A1A1A]"
         >
-          A closer look at Waterbridge House.
-        </h3>
+          <span>Watch the feature</span>
+          <ArrowUpRight
+            size={18}
+            aria-hidden="true"
+            className="shrink-0 transition-transform duration-200 motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5"
+          />
+        </a>
       </div>
-
-      <a
-        href="https://www.youtube.com/watch?v=3a1A1Hcbs5w&t=97s"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Watch the Waterbridge House feature on YouTube (opens in a new tab)"
-        className="group inline-flex w-full sm:w-fit shrink-0 items-center justify-center gap-5 min-h-12 px-6 py-4 bg-[#1A1A1A] text-white font-sans text-xs tracking-widest uppercase transition-colors duration-200 hover:bg-[#363636] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1A1A1A]"
-      >
-        <span>Watch the feature</span>
-        <ArrowUpRight
-          size={18}
-          aria-hidden="true"
-          className="shrink-0 transition-transform duration-200 motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5"
-        />
-      </a>
     </div>
   </section>
 )}
