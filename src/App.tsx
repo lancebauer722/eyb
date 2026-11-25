@@ -367,11 +367,14 @@ export default function App() {
       split: 'col-span-12 md:col-span-7',
       description: 'The millennium-long allure of the East and the Western essence of modern design flow together as one, crossing the boundaries of culture, time, and space',
       details: [
-        '/640 (6).png',
-        '/640.webp',
-        '/640.jpg',
-        '/IMG_0548.jpeg'
-      ]
+  '/640 (6).png',
+  '/640.webp',
+  '/640.jpg',
+  '/suzhou-dining.png',
+  '/suzhou-console.png',
+  '/suzhou-bedroom.png',
+  '/IMG_0548.jpeg'
+]
     },
     { 
       id: 2, 
