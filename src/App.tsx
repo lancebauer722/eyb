@@ -424,7 +424,7 @@ export default function App() {
       img: '/2923_6.jpg', 
       heroImg: '/2923.jpg',
       split: 'col-span-12 md:col-span-8',
-      description: 'Drawing inspiration from the gardens of Suzhou and the architectural philosophy of I.M. Pei, Ikeniwa blends modern minimalism with the heritage of Japanese stroll gardens and Suzhou classical design.',
+      description: 'Ikeniwa means “pond garden” in Japanese. I drew on historic Asian gardens and the work of I. M. Pei to design this Carmel home around a central pond. Upstairs, the living room opens onto a terrace overlooking Carmel Bay. Downstairs, the main bedroom opens directly onto the pond garden. A desk in the guest bedroom looks out over the water. Maple and cherry trees fill the courtyards, where three stone lion heads sit among the Japanese dry gardens.',
       details: [
         '/welcome_to_ikeniwa (1080p) (1).mp4',
         '/681e30243a1d2c3e3b0891136fa65916.jpeg',
