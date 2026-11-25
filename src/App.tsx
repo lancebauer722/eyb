@@ -259,19 +259,29 @@ export default function App() {
       .to(revealBottomRef.current, { y: '100%', duration: 1.5, ease: 'power4.inOut' }, 0.5)
       .to(revealImageRef.current, { scale: 1, opacity: 1, duration: 1.5, ease: 'power4.inOut' }, 0.5)
       .fromTo('.project-hero-info', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out' }, 1.5);
-    if (project.title === 'WATERBRIDGE HOUSE') {
-  tl.fromTo(
-    '.hero-quote',
-    { opacity: 0, y: 12 },
-    {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      ease: 'power2.out',
-    },
-    2.05
-  );
-}
+      if (project.title === 'WATERBRIDGE HOUSE') {
+    tl.call(
+      () => {
+        const quote =
+          revealContainerRef.current?.querySelector('.hero-quote');
+  
+        if (quote) {
+          gsap.fromTo(
+            quote,
+            { opacity: 0, y: 12 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: 'power2.out',
+            }
+          );
+        }
+      },
+      [],
+      2.05
+    );
+  }
   };
 
   const closeProject = () => {
