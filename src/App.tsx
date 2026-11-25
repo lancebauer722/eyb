@@ -402,7 +402,7 @@ export default function App() {
       img: '/2949_18.jpeg', 
       heroImg: '/2949_3.jpeg',
       split: 'col-span-12 md:col-span-4',
-      description: 'Deeply rooted in the heritage of Suzhou, this Pebble Beach retreat integrates a 3,000-year-old water garden tradition into a high-functioning forest residence.',
+      description: 'Spyglass Garden House sits in Del Monte Forest beside the fairways of Spyglass Hill. I designed the house for gatherings that could move easily between the living spaces and the garden. Drawing on Japanese design, I kept the lines simple and the palette quiet so the eye would settle on the landscape. As in the other homes in my Pond Series, the pond gives the garden a different character as the light changes throughout the day.',
       details: [
         '/spyglass_garden_house,_pebble_beach___luxury_vacation_rental (1080p) (1).mp4',
         '/2949_19.jpeg',
