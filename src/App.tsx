@@ -382,8 +382,7 @@ export default function App() {
       heroImg: '/3159 Stevenson Dr Reshoot-2.jpeg',
       split: 'col-span-12 md:col-span-5',
       featuredLogo: '/assets/aistudio/62ccb7b765d5ab23004e42d1_AmBD_Architecture_Logo_b8f7687c.svg',
-      description: 'A minimalist estate compound in Pebble Beach that blends Scandinavian and Japanese design influences, featuring a glass-enclosed passage over a tranquil pond that connects the residence\'s public and private wings.',
-      details: [
+      description: 'Waterbridge House began with my memory of a garden pavilion in Suzhou, China. In Pebble Beach, I arranged the main house, guest house and tea house around a reflecting pond. A glass bridge crosses the water between the living spaces and the private wing. From the kitchen, the view reaches through the pines to the Pacific. At the tea house, stepping stones lead across the water to a quiet place apart.',      details: [
         '/3159 Stevenson Drive, Pebble Beach.mp4',
         '/3159 Stevenson Dr Reshoot-7.jpeg',
         '/5544_41.webp',
