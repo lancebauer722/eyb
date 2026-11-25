@@ -361,7 +361,7 @@ export default function App() {
       featuredLogo: '/assets/aistudio/62ccb7b765d5ab23004e42d1_AmBD_Architecture_Logo_b8f7687c.svg',
       description: 'A minimalist estate compound in Pebble Beach that blends Scandinavian and Japanese design influences, featuring a glass-enclosed passage over a tranquil pond that connects the residence\'s public and private wings.',
       details: [
-        '/Waterbridge (1).mp4',
+        '/3159 Stevenson Drive, Pebble Beach.mp4',
         '/3159 Stevenson Dr Reshoot-7.jpeg',
         '/3159 Stevenson Dr Reshoot-6.jpeg',
         '/3159 Stevenson Dr-15.jpeg',
