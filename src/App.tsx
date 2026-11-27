@@ -532,28 +532,50 @@ export default function App() {
   </button>
 </header>
       
-      {/* Mobile Navigation Overlay */}
-      {mobileMenuOpen && (
-        <div
-          className={`fixed inset-x-0 top-0 z-40 pt-24 pb-8 px-6 md:hidden transition-colors duration-300 ${
-            isPastHero
-              ? 'bg-white/95 backdrop-blur-md text-[#1A1A1A] border-b border-[#1A1A1A]/10'
-              : 'bg-[#1A1A1A]/90 backdrop-blur-md text-white'
-          }`}
-        >
-          <nav className="flex flex-col gap-6 font-sans text-sm tracking-widest uppercase">
-            <a href="#about" onClick={(e) => scrollToSection(e, '#about')} className="py-1">
-              About
-            </a>
-            <a href="#work" onClick={(e) => scrollToSection(e, '#work')} className="py-1">
-              Work
-            </a>
-            <a href="#contact" onClick={(e) => scrollToSection(e, '#contact')} className="py-1">
-              Contact
-            </a>
-          </nav>
-        </div>
-      )}
+{/* Mobile Navigation Overlay */}
+{mobileMenuOpen && (
+  <div
+    className={`fixed inset-x-0 top-0 z-40 pt-24 pb-8 px-6 md:hidden transition-colors duration-300 ${
+      isPastHero
+        ? 'bg-white/95 backdrop-blur-md text-[#1A1A1A] border-b border-[#1A1A1A]/10'
+        : 'bg-[#1A1A1A]/90 backdrop-blur-md text-white'
+    }`}
+  >
+    <nav className="flex flex-col gap-6 font-sans text-sm tracking-widest uppercase">
+      <a
+        href="#about"
+        onClick={(e) => scrollToSection(e, '#about')}
+        className="py-1"
+      >
+        About
+      </a>
+
+      <a
+        href="#work"
+        onClick={(e) => scrollToSection(e, '#work')}
+        className="py-1"
+      >
+        Work
+      </a>
+
+      <a
+        href="#news"
+        onClick={(e) => scrollToSection(e, '#news')}
+        className="py-1"
+      >
+        News
+      </a>
+
+      <a
+        href="#contact"
+        onClick={(e) => scrollToSection(e, '#contact')}
+        className="py-1"
+      >
+        Contact
+      </a>
+    </nav>
+  </div>
+)}
 
       {/* Hero Section */}
       <section
