@@ -634,7 +634,260 @@ export default function App() {
           ))}
         </div>
       </section>
+      {/* News Section */}
+<section
+  id="news"
+  aria-labelledby="news-heading"
+  className="eyb-news scroll-mt-24 bg-white px-6 md:px-12 pt-12 md:pt-16 pb-24 md:pb-32"
+>
+  <style>{`
+    .eyb-news .news-card {
+      position: relative;
+      display: block;
+      min-width: 0;
+      color: #1a1a1a;
+      text-decoration: none;
+    }
 
+    .eyb-news .news-card:focus-visible {
+      outline: 2px solid #1a1a1a;
+      outline-offset: 6px;
+    }
+
+    .eyb-news .news-media {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #f3f3f1;
+    }
+
+    .eyb-news .news-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 600ms ease;
+    }
+
+    .eyb-news .news-publication {
+      object-fit: contain;
+      padding: clamp(1rem, 2vw, 2rem);
+    }
+
+    .eyb-news .news-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      transition: opacity 250ms ease;
+    }
+
+    .eyb-news .news-panel {
+      padding: 1.25rem 0 0;
+    }
+
+    .eyb-news .news-source {
+      margin: 0 0 0.75rem;
+      font-size: 0.6875rem;
+      line-height: 1.6;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #666;
+    }
+
+    .eyb-news .news-title {
+      margin: 0;
+      max-width: 22ch;
+      font-size: clamp(1.375rem, 2.2vw, 2rem);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      text-wrap: balance;
+    }
+
+    .eyb-news .news-detail {
+      margin: 0.875rem 0 0;
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      color: #666;
+    }
+
+    .eyb-news .news-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      padding-bottom: 0.375rem;
+      border-bottom: 1px solid #1a1a1a;
+      font-size: 0.6875rem;
+      line-height: 1.5;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+      .eyb-news .news-panel {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(1.25rem, 3vw, 3rem);
+        background: rgba(255, 255, 255, 0.95);
+        text-align: center;
+        opacity: 0;
+        transition: opacity 250ms ease;
+        pointer-events: none;
+      }
+
+      .eyb-news .news-card:hover .news-panel,
+      .eyb-news .news-card:focus-visible .news-panel {
+        opacity: 1;
+      }
+
+      .eyb-news .news-card:hover .news-image {
+        transform: scale(1.025);
+      }
+
+      .eyb-news .news-card:hover .news-play,
+      .eyb-news .news-card:focus-visible .news-play {
+        opacity: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .eyb-news .news-image,
+      .eyb-news .news-panel,
+      .eyb-news .news-play {
+        transition: none;
+      }
+
+      .eyb-news .news-card:hover .news-image {
+        transform: none;
+      }
+    }
+  `}</style>
+
+  <div className="mb-12 md:mb-16 border-b-2 border-[#1A1A1A] pb-8">
+    <h2
+      id="news-heading"
+      className="font-sans font-normal text-4xl md:text-6xl tracking-normal uppercase text-[#1A1A1A]"
+    >
+      News
+    </h2>
+  </div>
+
+  <div className="grid grid-cols-1 md:grid-cols-12 items-start gap-x-6 md:gap-x-12 gap-y-12 md:gap-y-16">
+    {[
+      {
+        id: 'america-article',
+        source: 'America ByDESIGN',
+        title: 'Waterbridge House',
+        detail: 'Project feature',
+        action: 'Read the story',
+        href: 'https://www.bydesign.global/america-features/waterbridge-house',
+        image: '/3159 Stevenson Dr Reshoot-2.jpeg',
+        alt: 'Waterbridge House framed by pine trees',
+        layout: 'md:col-span-7',
+        publication: false,
+        video: false,
+      },
+      {
+        id: '65-magazine',
+        source: '65° Magazine',
+        title: 'Designing with Nature in Mind',
+        detail: 'Pages 55–59',
+        action: 'Read the magazine',
+        href: 'https://heyzine.com/flip-book/4bafb1a4d5.html',
+        image: '/news-65-magazine.png',
+        alt: 'Designing with Nature in Mind magazine spread',
+        layout: 'md:col-span-5 md:mt-16',
+        publication: true,
+        video: false,
+      },
+      {
+        id: 'poltrona-frau',
+        source: 'Poltrona Frau',
+        title: 'Poltrona Frau in homes of the world',
+        detail: 'Lookbook 2024 · Pages 18–25',
+        action: 'Explore the lookbook',
+        href: 'https://www.poltronafrau.com/content/dam/ld/poltronafrau/catalogs/home-night/PF_look-book_2024.pdf#page=18',
+        image: '/news-poltrona-frau.png',
+        alt: 'Poltrona Frau 2024 lookbook cover',
+        layout: 'md:col-span-5',
+        publication: true,
+        video: false,
+      },
+      {
+        id: 'america-film',
+        source: 'America ByDESIGN · YouTube',
+        title: 'Waterbridge House, on film',
+        detail: 'Watch the feature',
+        action: 'Play the film',
+        href: 'https://www.youtube.com/watch?v=3a1A1Hcbs5w&t=97s',
+        image: '/3159 Stevenson Dr Reshoot-7.jpeg',
+        alt: 'A view of Waterbridge House',
+        layout: 'md:col-span-7 md:mt-16',
+        publication: false,
+        video: true,
+      },
+    ].map((item) => (
+      <a
+        key={item.id}
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${item.source}: ${item.title}. ${item.detail}. Opens in a new tab.`}
+        className={`news-card font-sans ${item.layout}`}
+      >
+        <div className="news-media">
+          <img
+            src={item.image}
+            alt={item.alt}
+            loading="lazy"
+            decoding="async"
+            className={`news-image ${
+              item.publication ? 'news-publication' : ''
+            }`}
+          />
+
+          {item.video && (
+            <div className="news-play" aria-hidden="true">
+              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/70 bg-black/25 text-white">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinejoin="round"
+                  className="ml-1"
+                >
+                  <path d="M8 5L19 12L8 19V5Z" />
+                </svg>
+              </span>
+            </div>
+          )}
+        </div>
+
+        <div className="news-panel">
+          <p className="news-source">{item.source}</p>
+          <h3 className="news-title">{item.title}</h3>
+          <p className="news-detail">{item.detail}</p>
+
+          <span className="news-action">
+            {item.action}
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
       {/* Inquiry Footer */}
       <section id="contact" className="bg-[#1A1A1A] text-[#F9F9F9] px-6 md:px-12 pt-16 pb-24 flex flex-col">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
