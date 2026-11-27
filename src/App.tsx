@@ -499,7 +499,6 @@ export default function App() {
             >
               Contact
             </a>
-            <Magnetic>
           </Magnetic>
         </nav>
         <button
