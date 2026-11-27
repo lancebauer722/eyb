@@ -499,6 +499,17 @@ export default function App() {
             >
               Contact
             </a>
+            <Magnetic>
+  <a
+    href="#news"
+    onClick={(e) => scrollToSection(e, '#news')}
+    className={`whitespace-nowrap shrink-0 transition-opacity duration-200 ${
+      isPastHero ? 'hover:text-[#888888]' : 'hover:opacity-75'
+    }`}
+  >
+    News
+  </a>
+</Magnetic>
           </Magnetic>
         </nav>
         <button
