@@ -41,3 +41,33 @@ h1, h2, h3, h4, h5, h6 {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Shared content width across the homepage */
+:root {
+  --site-content-width: 90rem;
+  --site-gutter: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --site-gutter: 3rem;
+  }
+}
+
+/* Keep content centered and prevent unlimited expansion */
+#about > div,
+#work > div,
+#news > div,
+#contact > div {
+  width: 100%;
+  max-width: var(--site-content-width);
+  margin-inline: auto;
+}
+
+/* Align the fixed header with the main content */
+#root > div > header {
+  padding-inline: max(
+    var(--site-gutter),
+    calc((100% - var(--site-content-width)) / 2)
+  );
+}
