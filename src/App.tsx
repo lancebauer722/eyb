@@ -447,71 +447,91 @@ export default function App() {
       <CustomCursor />
 
       {/* Header */}
-      <header
-        ref={headerRef}
-        className={`fixed top-0 left-0 w-full z-50 px-6 md:px-12 flex justify-between items-center transition-all duration-300 ${
-          isPastHero
-            ? 'py-4 bg-white/95 backdrop-blur-md text-[#1A1A1A] border-b border-[#1A1A1A]/10'
-            : 'py-6 bg-transparent text-white'
+<header
+  ref={headerRef}
+  className={`fixed top-0 left-0 w-full z-50 px-6 md:px-12 flex justify-between items-center transition-all duration-300 ${
+    isPastHero
+      ? 'py-4 bg-white/95 backdrop-blur-md text-[#1A1A1A] border-b border-[#1A1A1A]/10'
+      : 'py-6 bg-transparent text-white'
+  }`}
+>
+  <a
+    href="#"
+    onClick={(e) => {
+      e.preventDefault();
+      setMobileMenuOpen(false);
+      lenisRef.current?.scrollTo(0, { duration: 1.2 });
+    }}
+    className="font-sans text-lg sm:text-xl md:text-2xl font-medium tracking-tight uppercase whitespace-nowrap shrink-0"
+  >
+    Emily Yang Bauer
+  </a>
+
+  <nav className="hidden md:flex items-center gap-5 lg:gap-8 font-sans text-xs tracking-widest uppercase">
+    <Magnetic>
+      <a
+        href="#about"
+        onClick={(e) => scrollToSection(e, '#about')}
+        className={`whitespace-nowrap shrink-0 transition-opacity duration-200 ${
+          isPastHero ? 'hover:text-[#888888]' : 'hover:opacity-75'
         }`}
       >
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            setMobileMenuOpen(false);
-            lenisRef.current?.scrollTo(0, { duration: 1.2 });
-          }}
-          className="font-sans text-lg sm:text-xl md:text-2xl font-medium tracking-tight uppercase whitespace-nowrap shrink-0"
-        >
-          Emily Yang Bauer
-        </a>
-        <nav className="hidden md:flex items-center gap-8 font-sans text-xs tracking-widest uppercase">
-          <Magnetic>
-            <a
-              href="#about"
-              onClick={(e) => scrollToSection(e, '#about')}
-              className={`whitespace-nowrap shrink-0 transition-opacity duration-200 ${
-                isPastHero ? 'hover:text-[#888888]' : 'hover:opacity-75'
-              }`}
-            >
-              About
-            </a>
-          </Magnetic>
-          <Magnetic>
-            <a
-              href="#work"
-              onClick={(e) => scrollToSection(e, '#work')}
-              className={`whitespace-nowrap shrink-0 transition-opacity duration-200 ${
-                isPastHero ? 'hover:text-[#888888]' : 'hover:opacity-75'
-              }`}
-            >
-              Work
-            </a>
-          </Magnetic>
-          <Magnetic>
-            <a
-              href="#contact"
-              onClick={(e) => scrollToSection(e, '#contact')}
-              className={`whitespace-nowrap shrink-0 transition-opacity duration-200 ${
-                isPastHero ? 'hover:text-[#888888]' : 'hover:opacity-75'
-              }`}
-            >
-              Contact
-            </a>
-          </Magnetic>
-        </nav>
-        <button
-          type="button"
-          aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-          aria-expanded={mobileMenuOpen}
-          onClick={() => setMobileMenuOpen((prev) => !prev)}
-          className="md:hidden p-2 -mr-2 transition-opacity hover:opacity-75"
-        >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </header>
+        About
+      </a>
+    </Magnetic>
 
+    <Magnetic>
+      <a
+        href="#work"
+        onClick={(e) => scrollToSection(e, '#work')}
+        className={`whitespace-nowrap shrink-0 transition-opacity duration-200 ${
+          isPastHero ? 'hover:text-[#888888]' : 'hover:opacity-75'
+        }`}
+      >
+        Work
+      </a>
+    </Magnetic>
+
+    <Magnetic>
+      <a
+        href="#news"
+        onClick={(e) => scrollToSection(e, '#news')}
+        className={`whitespace-nowrap shrink-0 transition-opacity duration-200 ${
+          isPastHero ? 'hover:text-[#888888]' : 'hover:opacity-75'
+        }`}
+      >
+        News
+      </a>
+    </Magnetic>
+
+    <Magnetic>
+      <a
+        href="#contact"
+        onClick={(e) => scrollToSection(e, '#contact')}
+        className={`whitespace-nowrap shrink-0 transition-opacity duration-200 ${
+          isPastHero ? 'hover:text-[#888888]' : 'hover:opacity-75'
+        }`}
+      >
+        Contact
+      </a>
+    </Magnetic>
+  </nav>
+
+  <button
+    type="button"
+    aria-label={
+      mobileMenuOpen
+        ? 'Close navigation menu'
+        : 'Open navigation menu'
+    }
+    aria-expanded={mobileMenuOpen}
+    onClick={() => setMobileMenuOpen((prev) => !prev)}
+    className="md:hidden p-2 -mr-2 transition-opacity hover:opacity-75"
+  >
+    {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+  </button>
+</header>
+      
       {/* Mobile Navigation Overlay */}
       {mobileMenuOpen && (
         <div
