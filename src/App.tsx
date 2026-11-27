@@ -802,7 +802,7 @@ export default function App() {
         detail: 'Pages 55–59',
         action: 'Read the magazine',
         href: 'https://heyzine.com/flip-book/4bafb1a4d5.html',
-        image: '/news-65-magazine.png',
+        image: '/65_news.png',
         alt: 'Designing with Nature in Mind magazine spread',
         layout: 'md:col-span-5 md:mt-16',
         publication: true,
